@@ -52,3 +52,10 @@ html {
     box-shadow: none !important;
     outline: 0px !important;
 }
+#messages{
+    background-color: #40bd58;
+    color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
