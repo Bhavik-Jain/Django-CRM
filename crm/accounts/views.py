@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.core.files.base import File
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -84,6 +85,20 @@ def userPage(request):
     context = {'orders': orders, 'total_orders':total_orders,
             'delivered':delivered, 'pending':pending}
     return render(request, 'accounts/user.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def profilePage(request):
+    customer = request.user.customer
+    form = ProfileForm(instance=customer)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=customer) 
+        if form.is_valid():
+            form.save()
+            
+    context = {'form': form}
+    return render(request, 'accounts/profile.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
