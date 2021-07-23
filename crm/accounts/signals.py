@@ -1,26 +1,15 @@
-from django.db import models
+from .models import Customer
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.contrib.auth.models import Group
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length= 200, null = True)
-    last_name = models.CharField(max_length= 200, null = True)
-    phone = models.CharField(max_length= 200, null = True)
-
-    def __str__(self):
-        return self.first_name
-
-def create_profile(sender, instance, created, **kwargs):
+def customer_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
-        print('Profile Created')
+        group = Group.objects.get(name = 'customer')
+        instance.groups.add(group)
+        Customer.objects.create(
+            user = instance,
+            name = instance.username
+        )
 
-post_save.connect(create_profile, sender=User)
-
-def update_profile(sender, instance, created, **kwargs):
-    if created == 'False':
-        instance.profile.save()
-        print('Profile Updated')
-
-post_save.connect(update_profile, sender=User)
+post_save.connect(customer_profile, sender=User)
