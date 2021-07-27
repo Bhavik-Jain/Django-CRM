@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-q2q=)=v3hzym1)=l1_cw4%ty1f_9p+%a!fswi9ww3!nb!9)2nj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommback-end.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -77,17 +77,23 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'demo_1',
+#         'USER': 'bhavik',
+#         'PASSWORD': 'shubhampass',
+#         'HOST': 'database-1.cm8wbxtxglcv.ap-south-1.rds.amazonaws.com',
+#         'PORT': 5432,
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'demo_1',
-        'USER': 'bhavik',
-        'PASSWORD': 'shubhampass',
-        'HOST': 'database-1.cm8wbxtxglcv.ap-south-1.rds.amazonaws.com',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -149,14 +155,14 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 #S3 Bucket CONFIG
 
-AWS_ACCESS_KEY_ID= os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME= 'mydjangocrm'
+# AWS_ACCESS_KEY_ID= os.environ.get('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME= 'mydjangocrm'
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_S3_HOST = 's3.ap-south-1.amazonaws.com'
-AWS_S3_REGION_NAME="ap-south-1"
+# AWS_S3_HOST = 's3.ap-south-1.amazonaws.com'
+# AWS_S3_REGION_NAME="ap-south-1"
